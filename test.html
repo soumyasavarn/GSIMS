@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Quantity Checker</title>
+    <style>
+        #alertBox {
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f8d7da; /* Light red background */
+            color: #721c24; /* Dark red text */
+            border: 1px solid #f5c6cb; /* Light red border */
+            border-radius: 5px;
+            display: none; /* Hidden by default */
+        }
+    </style>
+    <script>
+        // Fetch product data from the server
+        function fetchProductData() {
+            const xhr = new XMLHttpRequest();
+            xhr.open('GET', 'trigger_check.php', true);
+            xhr.onload = function () {
+                if (this.status === 200 && this.responseText) {
+                    try {
+                        console.log(this.responseText);
+                        const products = JSON.parse(this.responseText);
+                        checkProductQuantities(products);
+                    } catch (e) {
+                        console.error('Error parsing JSON!', e);
+                    }
+                } else {
+                    console.error('Failed to fetch products: ', this.statusText);
+                }
+            };
+            xhr.onerror = function () {
+                console.error('Request failed.');
+            };
+            xhr.send();
+        }
+
+        // JavaScript function to check product quantities and display alerts
+        function checkProductQuantities(products) {
+            const threshold = 200;  // Define the threshold for low stock alert
+            const alertBox = document.getElementById('alertBox');
+            let alertMessage = '';
+
+            // Loop through each product in the array
+            products.forEach(product => {
+                // Check if the product quantity falls below the threshold
+                if (product.no_of_items < threshold) {
+                    // Create a message for this product
+                    alertMessage += `Warning: Low stock for ${product.Item_name}. Current stock: ${product.no_of_items}<br>`;
+                }
+            });
+
+            if (alertMessage) {
+                alertBox.innerHTML = alertMessage;
+                alertBox.style.display = 'block'; // Show the alert box if there are any alerts
+            } else {
+                alertBox.style.display = 'none'; // Hide the alert box if no alerts
+            }
+        }
+
+        // Set interval to fetch and check product quantities every 20 seconds
+        setInterval(() => {
+            console.log("Fetching and checking product quantities...");
+            fetchProductData();
+        }, 20000);  // 20000 milliseconds = 20 seconds
+    </script>
+</head>
+<body>
+    <h1>Product Stock Monitor</h1>
+    <p>Product stock levels are being checked every 20 seconds. Check below for alerts on low stock items.</p>
+    <div id="alertBox"></div> <!-- Container for displaying alert messages -->
+</body>
+</html>
