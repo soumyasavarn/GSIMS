@@ -1,8 +1,8 @@
 Github: https://github.com/soumyasavarn/GSIMS/tree/main
 
-# Advanced Inventory Database Solution: Grocery Management System
+# Advanced Inventory Database Solution
 
-This is a simple Grocery Management System implemented in PHP and MySQL. It allows users to manage grocery products, add them to a shopping cart, and perform various operations like adding, updating, and deleting products.
+This is a model solution for all inventory type management systems implemented on Grocery Management. Entire codebase consists of PHP, Javascript and MySQL. It allows users to manage grocery products, add them to a shopping cart, and perform various operations like adding, updating, and deleting products.
 
 ## Features
 
