@@ -56,10 +56,6 @@ define('DB_NAME', 'db_grocery');
 
 - Soumya Savarn
 
-## License
-
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
-
 ## Acknowledgements
 
 - This project was inspired by the need for a simple and efficient grocery management system.
